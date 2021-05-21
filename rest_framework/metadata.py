@@ -13,6 +13,7 @@ from django.http import Http404
 from django.utils.encoding import force_str
 
 from rest_framework import exceptions, serializers
+from rest_framework.fields import empty
 from rest_framework.request import clone_request
 from rest_framework.utils.field_mapping import ClassLookupDict
 
@@ -147,5 +148,8 @@ class SimpleMetadata(BaseMetadata):
                 }
                 for choice_value, choice_name in field.choices.items()
             ]
+
+        if field.default is not empty:
+            field_info['default'] = field.default
 
         return field_info
